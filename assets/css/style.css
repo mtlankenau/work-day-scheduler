@@ -13,6 +13,10 @@ textarea{
   padding: 10px;
 }
 
+i {
+  padding-top: 20px;
+}
+
 .jumbotron {
   text-align: center;
   background-color: transparent;
@@ -40,6 +44,7 @@ textarea{
   background-color: #ffffff;
   color: #000000;
   border-top: 1px dashed #000000;
+  padding-top: 30px;
 }
 
 .past {
