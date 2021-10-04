@@ -1,92 +1,46 @@
 // adds current date to p element in header element
 let currentDate = moment().format("dddd, MMMM Do, YYYY");
-var currentDateEl = document.querySelector("#currentDay");
+let currentDateEl = document.querySelector("#currentDay");
 currentDateEl.textContent = `${currentDate.toString()}`;
 
 // color highlights time-block rows based on current time
 let currentTime = moment().format("HH");
 let textareaEl = document.querySelectorAll("textarea");
 
-if (currentTime === "9") {
-    textareaEl[0].classList.replace("future", "present");
-} if (currentTime === "10") {
-    textareaEl[0].classList.replace("future", "past")
-    textareaEl[1].classList.replace("future", "present")
-} if (currentTime === "11") {
-    textareaEl[0].classList.replace("future", "past")
-    textareaEl[1].classList.replace("future", "past")
-    textareaEl[2].classList.replace("future", "present")
-} if (currentTime === "12") {
-    textareaEl[0].classList.replace("future", "past")
-    textareaEl[1].classList.replace("future", "past")
-    textareaEl[2].classList.replace("future", "past")
-    textareaEl[3].classList.replace("future", "present")
-} if (currentTime === "13") {
-    textareaEl[0].classList.replace("future", "past")
-    textareaEl[1].classList.replace("future", "past")
-    textareaEl[2].classList.replace("future", "past")
-    textareaEl[3].classList.replace("future", "past")
-    textareaEl[4].classList.replace("future", "present")
-} if (currentTime === "14") {
-    textareaEl[0].classList.replace("future", "past")
-    textareaEl[1].classList.replace("future", "past")
-    textareaEl[2].classList.replace("future", "past")
-    textareaEl[3].classList.replace("future", "past")
-    textareaEl[4].classList.replace("future", "past")
-    textareaEl[5].classList.replace("future", "present")
-} if (currentTime === "15") {
-    textareaEl[0].classList.replace("future", "past")
-    textareaEl[1].classList.replace("future", "past")
-    textareaEl[2].classList.replace("future", "past")
-    textareaEl[3].classList.replace("future", "past")
-    textareaEl[4].classList.replace("future", "past")
-    textareaEl[5].classList.replace("future", "past")
-    textareaEl[6].classList.replace("future", "present")
-} if (currentTime === "16") {
-    textareaEl[0].classList.replace("future", "past")
-    textareaEl[1].classList.replace("future", "past")
-    textareaEl[2].classList.replace("future", "past")
-    textareaEl[3].classList.replace("future", "past")
-    textareaEl[4].classList.replace("future", "past")
-    textareaEl[5].classList.replace("future", "past")
-    textareaEl[6].classList.replace("future", "past")
-    textareaEl[7].classList.replace("future", "present")
-} if (currentTime === "17") {
-    textareaEl[0].classList.replace("future", "past")
-    textareaEl[1].classList.replace("future", "past")
-    textareaEl[2].classList.replace("future", "past")
-    textareaEl[3].classList.replace("future", "past")
-    textareaEl[4].classList.replace("future", "past")
-    textareaEl[5].classList.replace("future", "past")
-    textareaEl[6].classList.replace("future", "past")
-    textareaEl[7].classList.replace("future", "past")
-    textareaEl[8].classList.replace("future", "present")
-} if (currentTime > 17) {
-    textareaEl[0].classList.replace("future", "past")
-    textareaEl[1].classList.replace("future", "past")
-    textareaEl[2].classList.replace("future", "past")
-    textareaEl[3].classList.replace("future", "past")
-    textareaEl[4].classList.replace("future", "past")
-    textareaEl[5].classList.replace("future", "past")
-    textareaEl[6].classList.replace("future", "past")
-    textareaEl[7].classList.replace("future", "past")
-    textareaEl[8].classList.replace("future", "past")
+// loops through 'textarea' elements
+for (var i = 0; i < textareaEl.length; i++){
+    // if current time (hour) is less than a textarea element's id, replace that element's class of past with a class of future
+    if (+currentTime < +textareaEl[i].id) {
+        textareaEl[i].classList.replace("past", "future");
+    }
+    // if current time (hour) is equal to a textarea element's id, replace that element's class of 'past' with a class of 'present'
+    if (+currentTime == +textareaEl[i].id) {
+        textareaEl[i].classList.replace("past", "present");
+    }
 };
 
+// selects all 'i' elements and returns associated node list
+var saveButtons = document.querySelectorAll(".saveBtn");
+// loops through 'i' elements
+for (var i = 0; i < saveButtons.length; i++){
+    // adds event listeners on 'i' elements that run the 'savefunction' function() when clicked
+    saveButtons[i].addEventListener("click", saveFunction);
+    // sets the time parameter of each 'i' element equal to its associated time (in military time)
+    saveButtons[i].time = i + 9;
+};
 
+// sets local storage keys (time) and associated value (textarea.value)
+function saveFunction(event){
+    localStorage.setItem(event.target.time, document.getElementById(event.target.time).value);
+};
 
+// gets local storage keys and adds associated value to appropriate textarea element based on ID (ID matches key)
+function loadStorage() {
+    var events = Object.keys(localStorage);
+    for (var i = 0; i < events.length; i++) {
+        document.getElementById(events[i]).value = localStorage.getItem(events[i]);
+    };
+};
 
-// var localStorageInput = localStorage.getItem("event");
-// var textareaContentTest = document.querySelector(".description");
-// textareaContentTest.textContent = localStorageInput;
-
-// // local storage for saving events to time blocks
-
-// document.querySelectorAll(".saveBtn").forEach(link => link.addEventListener("click", saveFunction));
-
-// function saveFunction(){
-//     var textareaContent = document.querySelector(".description")
-//     for (var i = 0; i < textareaContent.length; i++) {
-//         localStorage.setItem("event", textareaContent);
-//     }
-// };
+// calls loadStorage function() to run on page load/refresh
+loadStorage();
