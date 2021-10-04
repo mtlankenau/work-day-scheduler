@@ -1,6 +1,6 @@
 # Work Day Scheduler
 
-<img src="assets/images/readme-screenshot.jpg" alt="Example of randomly generated password">
+<img src="assets/images/readme-screenshot.jpg" alt="Example of work day scheduler">
 
 ## Background
 For one of our coding bootcamp's challenge assignments, we were tasked with use primarily third party APIs and JavaScript, along with HTML and CSS, to create a functional work day scheduler.
